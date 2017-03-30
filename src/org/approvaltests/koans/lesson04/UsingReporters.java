@@ -3,13 +3,7 @@ package org.approvaltests.koans.lesson04;
 import org.approvaltests.ReporterFactory;
 import org.approvaltests.core.ApprovalFailureReporter;
 import org.approvaltests.koans.helpers.Koans;
-import org.approvaltests.koans.helpers._____;
-import org.approvaltests.reporters.ClipboardReporter;
-import org.approvaltests.reporters.FileLauncherReporter;
-import org.approvaltests.reporters.ImageWebReporter;
-import org.approvaltests.reporters.MultiReporter;
-import org.approvaltests.reporters.QuietReporter;
-import org.approvaltests.reporters.UseReporter;
+import org.approvaltests.reporters.*;
 import org.approvaltests.reporters.windows.TortoiseImageDiffReporter;
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,17 +22,18 @@ import org.junit.Test;
 public class UsingReporters extends Koans
 {
   @Test
-  @UseReporter(_____.class)
+  @UseReporter(FileLauncherReporter.class)
   public void ConfiguringTheFileLauncherReporter() throws Exception
   {
     ApprovalFailureReporter reporter = ReporterFactory.getFromAnnotation();
     Assert.assertTrue("Please fill in the blank", reporter instanceof FileLauncherReporter);
+    // Approvals.verify("open window!"); // opens Window
   }
   @Test
   public void ConfiguringAClassLevelDefault() throws Exception
   {
     ApprovalFailureReporter reporter = ReporterFactory.getFromAnnotation();
-    Assert.assertTrue(reporter.getClass().getName(), reporter instanceof _____);
+    Assert.assertTrue(reporter.getClass().getName(), reporter instanceof QuietReporter);
   }
   @Test
   @UseReporter({ClipboardReporter.class, ImageWebReporter.class, TortoiseImageDiffReporter.class})
@@ -47,13 +42,13 @@ public class UsingReporters extends Koans
     ApprovalFailureReporter reporter = ReporterFactory.getFromAnnotation();
     MultiReporter multi = (MultiReporter) reporter;
     ApprovalFailureReporter second = multi.getReporters()[1];
-    Assert.assertTrue(second.getClass().getName(), second instanceof _____);
+    Assert.assertTrue(second.getClass().getName(), second instanceof ImageWebReporter);
   }
   @Test
   @UseReporter(FileLauncherReporter.class)
   public void UsingTextReportersForInsight() throws Exception
   {
-    if (!decode("=fikpKnf").equals(____))
+    if (!decode("=fikpKnf").equals("Forty Two"))
     {
       ApprovalFailureReporter reporter = ReporterFactory.getFromAnnotation();
       reporter.report(getPath("Insight.txt"), "");
@@ -64,7 +59,7 @@ public class UsingReporters extends Koans
   @UseReporter(ImageWebReporter.class)
   public void UsingImageForInsight() throws Exception
   {
-    String whatWasTheOldColor = ___;
+    String whatWasTheOldColor = "blue";
     if (!decode("Ycl\\").equals(whatWasTheOldColor.toLowerCase()))
     {
       ApprovalFailureReporter reporter = ReporterFactory.getFromAnnotation();
