@@ -6,6 +6,7 @@ import org.approvaltests.reporters.DiffReporter;
 import org.approvaltests.reporters.FileLauncherReporter;
 import org.approvaltests.reporters.QuietReporter;
 import org.approvaltests.reporters.UseReporter;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -38,10 +39,10 @@ public class ApprovingTheResult
   {
     // Directions: 
     // 1)Run the test
-    // 2) The Open a command line (terminal), and paste the command the move command from your clipboard  
+    // 2)The Open a command line (terminal), and paste the command the move command from your clipboard
     Approvals.verify("Moved by command line");
   }
-  @Test
+  @Test @Ignore
   @UseReporter(DiffReporter.class)
   public void UseWholeFileInADiffReporter() throws Exception
   {
