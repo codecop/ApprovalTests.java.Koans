@@ -9,7 +9,9 @@ import org.approvaltests.reporters.DiffReporter;
 import org.approvaltests.reporters.JunitReporter;
 import org.approvaltests.reporters.UseReporter;
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 
 import java.awt.*;
 
@@ -24,33 +26,39 @@ import static org.junit.Assert.assertEquals;
  * Step 3: Fill in the blank (___) to make it pass
  * Step 4: Repeat Until Enlightenment
  * Do not change anything except the blank (___)
+ *
+ * Note: Learn the approvals namer and infrastructure.
  */
 @UseReporter(JunitReporter.class)
 public class GettingStarted extends Koans {
     @Test
     public void normalJunitAsserts() {
-        assertEquals("Small String", ___);
+        assertEquals("Small String", "Small String");
     }
 
     @Test
     public void assertAgainstFileContents() {
-        FileAssert.verifyContentsIsEqual("expected.txt", ___);
+        FileAssert.verifyContentsIsEqual("expected.txt", "Small String");
     }
 
     @Test
     public void usingAutomaticFileNames() {
+        //Class.name + Method.name
         ApprovalNamer namer = Approvals.createApprovalNamer();
-        FileAssert.verifyContentsIsEqual(namer.getApprovalName() + ".txt", ___);
+        FileAssert.verifyContentsIsEqual(namer.getApprovalName() + ".txt", "Prefer Convention over Configuration");
     }
+
+    @Rule
+    public TestName name = new TestName();
 
     @Test
     public void automaticallyGeneratedNames() {
         ApprovalNamer namer = Approvals.createApprovalNamer();
-        assertEquals(namer.getApprovalName(), ___);
+        assertEquals(namer.getApprovalName(), this.getClass().getSimpleName() + "." + name.getMethodName());
     }
 
     @Test
-    public void ___() throws Exception {
+    public void usesMethodName() throws Exception {
         ApprovalNamer namer = Approvals.createApprovalNamer();
         assertEquals("GettingStarted.usesMethodName", namer.getApprovalName());
     }
@@ -58,7 +66,7 @@ public class GettingStarted extends Koans {
     @Test
     public void fileNames() throws Exception {
         ApprovalNamer namer = Approvals.createApprovalNamer();
-        String className = ___;
+        String className = "GettingStarted";
         String methodName = "fileNames";
         String approvalName = className + "." + methodName;
         Assert.assertEquals(namer.getApprovalName(), approvalName);
@@ -68,7 +76,7 @@ public class GettingStarted extends Koans {
     public void verifyBiggerText() throws Exception {
         Rectangle r = new Rectangle();
         r.width = 40;
-        r.height = ____;
+        r.height = 189;
         r.x = 136;
         r.y = 200;
         ApprovalNamer namer = Approvals.createApprovalNamer();
@@ -77,19 +85,22 @@ public class GettingStarted extends Koans {
 
     @Test
     public void approvalsUsesThisFileNameConvention() throws Exception {
-        Approvals.verify(___);
+        Approvals.verify("This is in the approved file");
         // Hint: If you double click the 1st line of the Failure Trace a diff tool will open
     }
 
     @Test
     @UseReporter(DiffReporter.class)
     public void seeingFilesSideBySide() throws Exception {
+        // diff is not installed as expected. how do we configure?
+        // TODO find a diff tool that works.
         ApprovalNamer namer = Approvals.createApprovalNamer();
-        Approvals.verify(___ + "\r\n" + namer.getApprovalName());
+        Approvals.verify("This file is called" + "\r\n" + namer.getApprovalName());
     }
 
     @Test
-    public void changingTheGoldenMaster() throws Exception {
+    public void changingTheGoLdenMaster() throws Exception {
+        // file names are not case sensitive
         Approvals.verify("This is the golden master");
         //Hint: What is the name of the file where the blank is?
     }
@@ -99,16 +110,24 @@ public class GettingStarted extends Koans {
         Rectangle r = new Rectangle();
         r.width = 40;
         r.height = 100;
-        r.x = ____;
+        r.x = 150;
         r.y = 200;
         Approvals.verify(r);
     }
 
     @Test
     public void sometimeYouNeedABetterToString() throws Exception {
-        Person p = new Person("jayne", "cobb", true, 38);
+
         String format = "Person\n  FirstName:%s\n  LastName:%s\n  Sex:%s\n  Age:%s\n";
-        String custom = String.format(format, p.getFirstName(), ___, p.isMale() ? "Male" : "Female", p.getAge());
-        Approvals.verify(custom);
+        Person p = new Person("jayne", "cobb", true, 38){
+            @Override
+            public String toString() {
+                Person p = this;
+                return String.format(format, p.getFirstName(), p.getLastName(), p.isMale() ? "Male" : "Female", p.getAge());
+            }
+        };
+        String custom = String.format(format, p.getFirstName(), p.getLastName(), p.isMale() ? "Male" : "Female", p.getAge());
+        // custom will become the toString
+        Approvals.verify(p);
     }
 }
