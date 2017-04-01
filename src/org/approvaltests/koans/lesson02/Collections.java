@@ -28,13 +28,14 @@ public class Collections extends Koans
   @Test
   public void simpleArrays() throws Exception
   {
-    String[] approvalsIsPortedTo = {".Net", "Java", "Perl", "Ruby", "Php", "Node.js"};
+    String[] approvalsIsPortedTo = { ".Net", "Java", "Perl", "Ruby", "Php", "Node.js" };
     Approvals.verifyAll("Language", approvalsIsPortedTo);
   }
+
   @Test
   public void listsWorkTheSameAsArrays() throws Exception
   {
-    List<String> approvalsIsGoodFor = new ArrayList<String>();
+    List<String> approvalsIsGoodFor = new ArrayList<>();
     approvalsIsGoodFor.add("Strings");
     approvalsIsGoodFor.add("Objects");
     approvalsIsGoodFor.add("Log Files");
@@ -46,10 +47,11 @@ public class Collections extends Koans
     approvalsIsGoodFor.add("Email");
     Approvals.verifyAll("Good For", approvalsIsGoodFor);
   }
+
   @Test
   public void mapsAreSortedBeforeDisplay() throws Exception
   {
-    HashMap<Integer, String> m = new HashMap<Integer, String>();
+    HashMap<Integer, String> m = new HashMap<>();
     m.put(1000, "M");
     m.put(10, "X");
     m.put(1, "I");
@@ -59,6 +61,7 @@ public class Collections extends Koans
     m.put(50, "L");
     Approvals.verify(m);
   }
+
   @Test
   public void theUseOfTheLabel() throws Exception
   {
@@ -70,10 +73,11 @@ public class Collections extends Koans
         "Better Off Ted"};
     Approvals.verifyAll("TV Show", greatTv);
   }
+
   @Test
   public void approvalHelpShowWhenThingsHaveBeenRemoved() throws Exception
   {
-    HashMap<String, String> m = new HashMap<String, String>();
+    HashMap<String, String> m = new HashMap<>();
     m.put("Miss Scarlet", "Conservatory");
     m.put("Colonel Mustard", "Kitchen");
     m.put("Mrs. White", "Billiard Room");
@@ -83,10 +87,11 @@ public class Collections extends Koans
     m.remove("Mr. Green");
     Approvals.verify(m);
   }
+
   @Test
   public void approvalHelpShowWhenThingsHaveBeenAdded() throws Exception
   {
-    HashMap<String, String> punch = new HashMap<String, String>();
+    HashMap<String, String> punch = new HashMap<>();
     punch.put("Orange Juice", "2 cups");
     punch.put("Lime Juice", "1/2 cup");
     punch.put("Fruit Juice", "1 cup");
@@ -96,17 +101,19 @@ public class Collections extends Koans
     punch.put("Rum", "1/2 bottle"); // <-- Uncomment Line to solve
     Approvals.verify(punch);
   }
+
   @Test
-  public void headersHelpExplainTheContextWhenThingsAreConfusing() throws Exception
+  public void headersHelpExplainTheContextWhenThingsAreConfusing()
   {
     String header = "Numbers in the Fibonacci sequence";
-    Integer[] values = {1, 2, 6, 9, 11};
+    Integer[] values = { 1, 2, 6, 9, 11 };
     Approvals.verifyAll(header, values, new Sequence());
   }
+
   @Test
   public void transformingArraysManually() throws Exception
   {
-    int[] numbers = {1, 3, 5, 10, 12, 16};
+    int[] numbers = { 1, 3, 5, 10, 12, 16 };
     StringBuffer b = new StringBuffer();
     for (int i : numbers)
     {
@@ -114,23 +121,26 @@ public class Collections extends Koans
     }
     Approvals.verify(b);
   }
+
   @Test
-  public void transformingArraysWithFunctions() throws Exception
+  public void transformingArraysWithFunctions()
   {
-    Integer[] numbers = {1, 3, 5, 10, 12, 16};
+    Integer[] numbers = { 1, 3, 5, 10, 12, 16 };
     Approvals.verifyAll("Squares", numbers, new Function1<Integer, String>()
     {
+      @Override
       public String call(Integer i)
       {
-        return i + "^2 = " + (i*i);
+        return i + "^2 = " + (i * i);
       }
     });
   }
+
   @Test
-  public void transformingArraysWithLambdas() throws Exception
+  public void transformingArraysWithLambdas()
   {
     // This requires java8
-    Integer[] numbers = {1, 3, 5, 10, 12, 16};
-    Approvals.verifyAll("Squares", numbers, n -> n + "^2 = " + (n*n));
+    Integer[] numbers = { 1, 3, 5, 10, 12, 16 };
+    Approvals.verifyAll("Squares", numbers, n -> n + "^2 = " + (n * n));
   }
 }

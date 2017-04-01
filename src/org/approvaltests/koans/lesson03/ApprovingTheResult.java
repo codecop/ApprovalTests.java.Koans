@@ -24,6 +24,7 @@ public class ApprovingTheResult
     // Hint: remember to refresh the file list
     Approvals.verify("Manually Renamed");
   }
+
   @Test
   @UseReporter(FileLauncherReporter.class)
   public void SaveAsApproved() throws Exception
@@ -33,6 +34,7 @@ public class ApprovingTheResult
     // 2)Save the launched file as .approved.  
     Approvals.verify("Saved as golden master");
   }
+
   @Test
   @UseReporter(ClipboardReporter.class)
   public void MoveTheFileViaCommandLine() throws Exception
@@ -42,7 +44,9 @@ public class ApprovingTheResult
     // 2)The Open a command line (terminal), and paste the command the move command from your clipboard
     Approvals.verify("Moved by command line");
   }
-  @Test @Ignore
+
+  @Test
+  @Ignore
   @UseReporter(DiffReporter.class)
   public void UseWholeFileInADiffReporter() throws Exception
   {
