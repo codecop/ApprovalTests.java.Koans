@@ -131,7 +131,7 @@ public class GettingStarted extends Koans
   public void sometimeYouNeedABetterToString() throws Exception
   {
 
-    String format = "Person\n  FirstName:%s\n  LastName:%s\n  Sex:%s\n  Age:%s\n";
+    final String format = "Person\n  FirstName:%s\n  LastName:%s\n  Sex:%s\n  Age:%s\n";
     Person p = new Person("jayne", "cobb", true, 38)
     {
       @Override
