@@ -3,10 +3,12 @@ package org.approvaltests.koans.tests;
 import org.approvaltests.koans.lesson01.GettingStarted;
 import org.approvaltests.reporters.QuietReporter;
 import org.approvaltests.reporters.UseReporter;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class KoansTests
 {
+  @Ignore("Lesson 01 is complete")
   @Test
   @UseReporter(QuietReporter.class)
   public void testLesson1()
